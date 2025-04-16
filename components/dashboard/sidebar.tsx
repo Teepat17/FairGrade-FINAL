@@ -90,7 +90,7 @@ export function DashboardSidebar() {
           {navigation.map((item) => (
             <SidebarMenuItem key={item.name}>
               <Link href={item.href} className="w-full">
-                <SidebarMenuButton active={item.current}>
+                <SidebarMenuButton isActive={item.current}>
                   <item.icon className="h-5 w-5" />
                   <span>{item.name}</span>
                 </SidebarMenuButton>

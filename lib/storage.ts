@@ -163,14 +163,30 @@ export async function getGradingSession(id: string): Promise<GradingSession | un
   return db.get('grading-sessions', id);
 }
 
-export async function getAllGradingSessions(): Promise<GradingSession[]> {
+export async function getAllGradingSessions(userId?: string): Promise<GradingSession[]> {
   const db = await initDB();
-  return db.getAll('grading-sessions');
+  const allSessions = await db.getAll('grading-sessions');
+  
+  if (userId) {
+    return allSessions.filter((session: GradingSession) => session.userId === userId);
+  }
+  
+  return allSessions;
 }
 
-export async function deleteGradingSession(id: string): Promise<void> {
-    const db = await initDB();
-  await db.delete('grading-sessions', id);
+export async function deleteGradingSession(id: string, userId?: string): Promise<void> {
+  const db = await initDB();
+  
+  if (userId) {
+    const session = await db.get('grading-sessions', id);
+    if (session && session.userId === userId) {
+      await db.delete('grading-sessions', id);
+    } else {
+      throw new Error('Session not found or not authorized to delete');
+    }
+  } else {
+    await db.delete('grading-sessions', id);
+  }
 }
 
 // Function to convert File to base64

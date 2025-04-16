@@ -117,10 +117,21 @@ export default function GradingPage() {
 
       // Create grading session
       const sessionId = `session-${Date.now()}`
+      
+      // Ensure subject is not null
+      if (!subject) {
+        toast({
+          title: "Subject required",
+          description: "Please select a subject for grading",
+          variant: "destructive",
+        })
+        return
+      }
+      
       const session = {
         id: sessionId,
         userId: user.id,
-        subject,
+        subject, // Now we know subject is not null
         sessionName,
         studentFiles: await Promise.all(studentFiles.map(file => fileToBase64(file))),
         rubricText: currentRubricText,
