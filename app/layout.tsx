@@ -31,7 +31,7 @@ export default function RootLayout({
         <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
       </head>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider>
           <AuthProvider>{children}</AuthProvider>
           <Toaster />
         </ThemeProvider>
