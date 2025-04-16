@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
 type User = {
   id: string
@@ -12,12 +12,12 @@ type StoredUser = User & {
   password: string
 }
 
-type AuthContextType = {
+interface AuthContextType {
   user: User | null
   loading: boolean
   login: (email: string, password: string) => Promise<void>
   register: (name: string, email: string, password: string) => Promise<void>
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -51,22 +51,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     setLoading(true)
     try {
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 500))
-
-      const users = getStoredUsers()
-      const user = users.find(u => u.email === email && u.password === password)
-
-      if (!user) {
-        throw new Error("Invalid email or password")
-      }
-
-      // Don't store password in current user
-      const { password: _, ...userData } = user
-      setUser(userData)
-      localStorage.setItem("current_user", JSON.stringify(userData))
+      // TODO: Implement actual login logic here
+      setUser({ email })
     } catch (error) {
-      console.error("Login failed:", error)
       throw error
     } finally {
       setLoading(false)
@@ -76,9 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (name: string, email: string, password: string) => {
     setLoading(true)
     try {
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 500))
-
+      // TODO: Implement actual registration logic here
       const users = getStoredUsers()
       
       // Check if email already exists
@@ -102,16 +87,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(userData)
       localStorage.setItem("current_user", JSON.stringify(userData))
     } catch (error) {
-      console.error("Registration failed:", error)
       throw error
     } finally {
       setLoading(false)
     }
   }
 
-  const logout = () => {
-    setUser(null)
-    localStorage.removeItem("current_user")
+  const logout = async () => {
+    setLoading(true)
+    try {
+      // TODO: Implement actual logout logic here
+      setUser(null)
+      localStorage.removeItem("current_user")
+    } catch (error) {
+      throw error
+    } finally {
+      setLoading(false)
+    }
   }
 
   return <AuthContext.Provider value={{ user, loading, login, register, logout }}>{children}</AuthContext.Provider>
