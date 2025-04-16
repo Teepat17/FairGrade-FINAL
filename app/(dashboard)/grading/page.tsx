@@ -124,6 +124,8 @@ export default function GradingPage() {
         sessionName,
         studentFiles: await Promise.all(studentFiles.map(file => fileToBase64(file))),
         rubricText: currentRubricText,
+        rubricFile: null,
+        useTemplateRubric: false,
         results,
         createdAt: new Date().toISOString(),
       }
