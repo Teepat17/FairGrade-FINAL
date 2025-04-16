@@ -139,8 +139,8 @@ export async function callAIAPIWithFile(file: File, prompt: string, answerKey?: 
   }
 
   try {
-    // Convert file to base64
-    const base64File = await fileToBase64(file);
+  // Convert file to base64
+  const base64File = await fileToBase64(file);
     let base64AnswerKey = '';
     
     if (answerKey) {
@@ -150,22 +150,22 @@ export async function callAIAPIWithFile(file: File, prompt: string, answerKey?: 
     return retryWithBackoff(async () => {
       // Prepare the request body
       const requestBody = {
-        contents: [{
-          parts: [
+      contents: [{
+        parts: [
             { text: prompt },
-            {
-              inline_data: {
-                mime_type: file.type,
-                data: base64File.split(',')[1] // Remove the data URL prefix
-              }
+          {
+            inline_data: {
+              mime_type: file.type,
+              data: base64File.split(',')[1] // Remove the data URL prefix
             }
-          ]
-        }],
-        generationConfig: {
+          }
+        ]
+      }],
+      generationConfig: {
           temperature: 0.3,
           maxOutputTokens: 1024,
-          topP: 0.8,
-          topK: 40
+        topP: 0.8,
+        topK: 40
         },
         safetySettings: [
           {
@@ -203,21 +203,21 @@ export async function callAIAPIWithFile(file: File, prompt: string, answerKey?: 
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestBody)
-      });
+  });
 
-      if (!response.ok) {
+  if (!response.ok) {
         const errorData = await response.json();
         console.error('AI API error:', errorData);
         throw new Error(`AI API request failed: ${response.statusText} - ${JSON.stringify(errorData)}`);
-      }
+  }
 
-      const data = await response.json();
-      if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+  const data = await response.json();
+  if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
         console.error('Invalid AI API response:', data);
         throw new Error('Invalid AI API response format');
-      }
+  }
 
-      return data.candidates[0].content.parts[0].text;
+  return data.candidates[0].content.parts[0].text;
     });
   } catch (error) {
     console.error('Error calling AI API:', error);
@@ -242,7 +242,7 @@ async function gradeCriterion(answer: File, criterionName: string, maxScore: num
     if (answerKey) {
       prompt = `You are an kind and helpful expert ${subject} grader. Compare the student's answer with the provided answer key and evaluate based on: ${criterionName}
         do not include * or ** or bold text
-        SCORE: [number between 0 and ${maxScore}]
+    SCORE: [number between 0 and ${maxScore}]
         STRENGTHS: [summary point]
         WEAKNESSES: [summary point]
         ANALYSIS: [Compare student's answer with the answer key, highlighting similarities and differences]

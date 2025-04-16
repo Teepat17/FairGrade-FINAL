@@ -15,10 +15,10 @@ const facts = [
 
 export function MarqueeFacts() {
   return (
-    <div className="flex flex-col gap-12 py-8 -mx-10">
+    <div className="flex flex-col gap-12 py-8">
       {/* First Row - Offset to the right */}
       <div className="relative flex overflow-hidden pl-32">
-        <div className="animate-marquee whitespace-nowrap flex gap-4">
+        <div className="animate-marquee whitespace-nowrap flex gap-8">
           {facts.map((fact, index) => (
             <div
               key={index}
@@ -30,7 +30,7 @@ export function MarqueeFacts() {
             </div>
           ))}
         </div>
-        <div className="absolute top-0 animate-marquee2 whitespace-nowrap flex gap-4">
+        <div className="absolute top-0 animate-marquee2 whitespace-nowrap flex gap-8">
           {facts.map((fact, index) => (
             <div
               key={index}
@@ -45,7 +45,7 @@ export function MarqueeFacts() {
       </div>
       {/* Second Row - Offset to the left */}
       <div className="relative flex overflow-hidden pr-32">
-        <div className="animate-marquee2 whitespace-nowrap flex gap-4">
+        <div className="animate-marquee2 whitespace-nowrap flex gap-8">
           {facts.map((fact, index) => (
             <div
               key={index}
@@ -57,7 +57,7 @@ export function MarqueeFacts() {
             </div>
           ))}
         </div>
-        <div className="absolute top-0 animate-marquee whitespace-nowrap flex gap-4">
+        <div className="absolute top-0 animate-marquee whitespace-nowrap flex gap-8">
           {facts.map((fact, index) => (
             <div
               key={index}

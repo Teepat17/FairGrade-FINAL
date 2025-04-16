@@ -40,7 +40,6 @@ const nextConfig = {
         crypto: false,
       };
     }
-    config.cache = false
     return config;
   },
 }
