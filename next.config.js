@@ -1,13 +1,16 @@
-const path = require('path');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
-    config.resolve.alias['@'] = path.resolve(__dirname);
-    return config;
-  },
+  reactStrictMode: true,
+  swcMinify: true,
   images: {
-    domains: ['localhost'],
+    domains: ['lh3.googleusercontent.com'],
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': process.cwd(),
+    };
+    return config;
   },
 };
 
