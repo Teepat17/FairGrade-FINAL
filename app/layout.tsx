@@ -10,8 +10,8 @@ import Head from "next/head"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ExamGrade AI - AI-Powered Exam Grading for Teachers",
-  description: "Grade student exams efficiently with AI assistance",
+  title: "FairGrade, Equitable AI-Based Answer Evaluation with Criterion-Aligned Feedback via LLMs",
+  description: "AI-powered grading system for fair and consistent evaluation",
   generator: 'v0.dev',
   icons: {
     icon: [
