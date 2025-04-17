@@ -11,15 +11,15 @@ export default function DashboardPage() {
   const { user } = useAuth()
 
   return (
-    <div className="container max-w-7xl mx-auto">
+    <div className="p-4">
       <WelcomeTutorial />
-      <div className="py-8">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Welcome back, {user?.name}!</h1>
+      <div className="space-y-4">
+        <header>
+          <h1 className="text-4xl font-bold mb-1">Welcome back, {user?.name}!</h1>
           <p className="text-lg text-muted-foreground">Manage and grade your student exams with AI assistance</p>
         </header>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl">

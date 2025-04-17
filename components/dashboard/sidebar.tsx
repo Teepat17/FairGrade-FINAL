@@ -83,13 +83,15 @@ export function DashboardSidebar() {
       <Button
         variant="ghost"
         size="icon"
-        className="fixed left-4 top-4 z-50 md:hidden"
+        className="fixed left-2 top-2 z-50 md:hidden"
         asChild
       >
         <SidebarTrigger>
           <Menu className="h-5 w-5" />
         </SidebarTrigger>
       </Button>
+
+      {/* Desktop Sidebar */}
       <Sidebar defaultCollapsed className="hidden md:flex">
         <SidebarHeader>
           <Link href="/dashboard" className="flex items-center justify-center py-4">
@@ -148,7 +150,9 @@ export function DashboardSidebar() {
         </SidebarFooter>
         <SidebarRail />
       </Sidebar>
-      <Sidebar className="fixed inset-y-0 left-0 z-40 md:hidden">
+
+      {/* Mobile Sidebar */}
+      <Sidebar className="fixed inset-y-0 left-0 z-40 -translate-x-full transition-transform duration-200 ease-in-out data-[state=open]:translate-x-0 md:hidden">
         <SidebarHeader>
           <Link href="/dashboard" className="flex items-center justify-center py-4">
             <Logo width={120} height={32} />
@@ -204,7 +208,6 @@ export function DashboardSidebar() {
             </DropdownMenuContent>
           </DropdownMenu>
         </SidebarFooter>
-        <SidebarRail />
       </Sidebar>
     </>
   )

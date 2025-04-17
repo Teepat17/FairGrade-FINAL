@@ -194,19 +194,19 @@ const Sidebar = React.forwardRef<
 
     if (isMobile) {
       return (
-        <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+        <Sheet open={openMobile} onOpenChange={setOpenMobile}>
           <SheetContent
-            data-sidebar="sidebar"
-            data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
-            style={
-              {
-                "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-              } as React.CSSProperties
-            }
             side={side}
+            className={cn(
+              "w-[--sidebar-width-mobile] p-0",
+              "data-[state=open]:w-[--sidebar-width-mobile]",
+              className
+            )}
+            {...props}
           >
-            <div className="flex h-full w-full flex-col">{children}</div>
+            <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
+              {children}
+            </div>
           </SheetContent>
         </Sheet>
       )
@@ -214,45 +214,41 @@ const Sidebar = React.forwardRef<
 
     return (
       <div
-        ref={ref}
-        className="group peer hidden md:block text-sidebar-foreground"
+        data-sidebar="sidebar"
         data-state={state}
-        data-collapsible={state === "collapsed" ? collapsible : ""}
         data-variant={variant}
         data-side={side}
+        className={cn(
+          "relative flex h-full flex-col bg-sidebar text-sidebar-foreground transition-[width] duration-300",
+          variant === "sidebar" && [
+            "w-[--sidebar-width]",
+            collapsible === "icon" &&
+              "group-data-[state=collapsed]/sidebar-wrapper:w-[--sidebar-width-icon]",
+            collapsible === "offcanvas" &&
+              "group-data-[state=collapsed]/sidebar-wrapper:w-0",
+          ],
+          variant === "floating" && [
+            "absolute inset-y-0 z-50 w-[--sidebar-width]",
+            side === "left" && "left-0",
+            side === "right" && "right-0",
+            collapsible === "icon" &&
+              "group-data-[state=collapsed]/sidebar-wrapper:w-[--sidebar-width-icon]",
+            collapsible === "offcanvas" &&
+              "group-data-[state=collapsed]/sidebar-wrapper:-translate-x-full",
+          ],
+          variant === "inset" && [
+            "w-[--sidebar-width]",
+            collapsible === "icon" &&
+              "group-data-[state=collapsed]/sidebar-wrapper:w-[--sidebar-width-icon]",
+            collapsible === "offcanvas" &&
+              "group-data-[state=collapsed]/sidebar-wrapper:w-0",
+          ],
+          className
+        )}
+        ref={ref}
+        {...props}
       >
-        {/* This is what handles the sidebar gap on desktop */}
-        <div
-          className={cn(
-            "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
-            "group-data-[collapsible=offcanvas]:w-0",
-            "group-data-[side=right]:rotate-180",
-            variant === "floating" || variant === "inset"
-              ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
-              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
-          )}
-        />
-        <div
-          className={cn(
-            "duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex",
-            side === "left"
-              ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-              : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
-            // Adjust the padding for floating and inset variants.
-            variant === "floating" || variant === "inset"
-              ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
-              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
-            className
-          )}
-          {...props}
-        >
-          <div
-            data-sidebar="sidebar"
-            className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
-          >
-            {children}
-          </div>
-        </div>
+        {children}
       </div>
     )
   }
