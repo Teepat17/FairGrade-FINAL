@@ -25,35 +25,8 @@ export default function RegisterPage() {
   const router = useRouter()
   const { toast } = useToast()
 
-  const validatePassword = (password: string) => {
-    const minLength = 8
-    const hasUpperCase = /[A-Z]/.test(password)
-    const hasLowerCase = /[a-z]/.test(password)
-    const hasNumbers = /\d/.test(password)
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password)
-
-    const errors = []
-    if (password.length < minLength) errors.push(`at least ${minLength} characters`)
-    if (!hasUpperCase) errors.push("one uppercase letter")
-    if (!hasLowerCase) errors.push("one lowercase letter")
-    if (!hasNumbers) errors.push("one number")
-    if (!hasSpecialChar) errors.push("one special character")
-
-    return errors
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    const passwordErrors = validatePassword(password)
-    if (passwordErrors.length > 0) {
-      toast({
-        title: "Invalid password",
-        description: `Password must contain ${passwordErrors.join(", ")}`,
-        variant: "destructive",
-      })
-      return
-    }
 
     if (password !== confirmPassword) {
       toast({
@@ -132,9 +105,6 @@ export default function RegisterPage() {
                 )}
               </Button>
             </div>
-            <p className="text-sm text-gray-500">
-              Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.
-            </p>
           </div>
           <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
