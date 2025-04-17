@@ -232,7 +232,7 @@ async function gradeCriterion(answer: File, criterionName: string, maxScore: num
 }> {
   try {
     let prompt = `You are an kind and helpful expert ${subject} grader. Evaluate this exam based on: ${criterionName} answer in bullet point form
-      do not include * or ** or bold text
+      do not include * or ** or bold text. If it not look like an exam do not return the score.
       SCORE: [number between 0 and ${maxScore}]
       STRENGTHS: [summary point]
       WEAKNESSES: [summary point]
@@ -241,7 +241,7 @@ async function gradeCriterion(answer: File, criterionName: string, maxScore: num
 
     if (answerKey) {
       prompt = `You are an kind and helpful expert ${subject} grader. Compare the student's answer with the provided answer key and evaluate based on: ${criterionName}
-        do not include * or ** or bold text
+        do not include * or ** or bold text. If it not look like an exam do not return the score.
     SCORE: [number between 0 and ${maxScore}]
         STRENGTHS: [summary point]
         WEAKNESSES: [summary point]
